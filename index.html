@@ -33,82 +33,28 @@
       <div class="container" id="registeredUsers">
         <header class="text-dark text-center mt-3">
             <h2 class="display-5">Registered Users</h2>
-            <button type="button" class="btn btn-primary mt-3" onclick="generate_table()">View Users</button>
-            <button type="button" class="btn btn-danger mt-3" onclick="close_table()">Close</button>
+            <button type="button" class="btn btn-primary mt-3 mx-2 px-4" onclick="show_table()">View Users</button>
+            <button type="button" class="btn btn-danger mt-3" onclick="close_table()" style="display: none;" id="close">Close</button>
         </header>
         <hr>
-        <div id="dvTable"></div>
+
+        <div id="dvTable" style="display: none;">
+          <input type="text" id="search" placeholder="Search by Customer Name" class="p-2 mb-2" size="30" />
+          <table class="table table-bordered text-center">
+            <tr class="bg-light">
+              <th>Customer ID</th>
+              <th>Customer Name</th>
+              <th>Customer Mobile</th>
+              <th>Customer e-Mail</th>
+            </tr>
+            <tbody id="myTable"></tbody>
+        </table>
+        </div>
+        
+        
+
       </div>
 
-
-      <!-- Banner Image Upload -->
-      <!-- <div class="container py-5" id="add_banner">
-
-        <header class="text-dark text-center">
-            <h2 class="display-5">Upload Ad Banner</h2>
-            <hr>
-        </header>
-    
-        <div class="row py-4">
-            <div class="col-lg-6 mx-auto">
-    
-                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                    <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
-                    <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file to be uploaded</label>
-                    <div class="input-group-append">
-                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-                    </div>
-                </div>
-    
-                <div class="image-area mt-4">
-                    <img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
-              </div>
-
-              <div class="container text-center" id="button" style="display: none;">
-                <button type="button" class="btn btn-primary mt-3 " onclick="upload()">Upload</button>
-                <button type="button" class="btn btn-danger mt-3 " onclick="cancel()">Cancel</button>
-              </div>
-                
-            </div>
-        </div> -->
-
-        <!-- Already Uploaded Image -->
-        <!-- <div class="row row-cols-1 row-cols-md-3">
-            <div class="col mb-4">
-                <div class="card h-100">
-                    <img src="..." id="1" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Image / File Name</h5>
-                    </div>
-                  </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Image / File Name</h5>
-                    </div>
-                  </div>
-            </div>
-            <div class="col mb-4">
-              <div class="card h-100">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Image / File Name</h5>
-                </div>
-              </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Image / File Name</h5>
-                    </div>
-                  </div>
-            </div>
-          </div>
-
-    </div> -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
