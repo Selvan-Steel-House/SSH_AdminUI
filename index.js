@@ -1,52 +1,25 @@
 //JSON to HTML Table
 //replace API response JSON 
-var myArray = [
-    {
-        "customer_id": "1234",
-        "customer_name": "Ramu",
-        "customer_phone": "123456789",
-        "customer_mail": "asdf@fgh.com"
-      },
-       {
-        "customer_id": "1234",
-        "customer_name": "Samu",
-        "customer_phone": "123456789",
-        "customer_mail": "asdf@ghj.com"
-      },
-      {
-        "customer_id": "1234",
-        "customer_name": "Damu",
-        "customer_phone": "123456789",
-        "customer_mail": "asdf@ghj.com"
-      },
-      {
-        "customer_id": "1234",
-        "customer_name": "Pamu",
-        "customer_phone": "123456789",
-        "customer_mail": "asdf@ghj.com"
-      }
-];
 
-var banners = [
-    {
-      "ad_id": "1234",
-      "ad_url": "https://img.freepik.com/free-vector/colorful-palm-silhouettes-background_23-2148541792.jpg?size=626&ext=jpg"
-    },
-    {
-      "ad_id": "5678",
-      "ad_url": "https://img.freepik.com/free-vector/dark-paper-layers-wallpaper-with-golden-details_23-2148403401.jpg?size=626&ext=jpg"
-    },
-    {
-        "ad_id": "4567",
-        "ad_url": "https://img.freepik.com/free-vector/colorful-palm-silhouettes-background_23-2148541792.jpg?size=626&ext=jpg"
-      }
-  ];
 
+window.onload = function(){
+  console.log("loaded",window.location.href);
+  var arr = window.location.href.split("/");
+
+  if(!localStorage.getItem("token")&&arr[arr.length-1]!="index.html"){
+    window.location.href = "./index.html";
+  }
+  else{
+    if(arr[arr.length-1]=="index.html"){
+      localStorage.removeItem("token");
+    }
+  }
+}
 
 //Table Search
 $('#search').on('keyup', function(){
     var value = $(this).val(); 
-    // console.log("value", valu e);
+    // console.log("value", value);
     var data = searchTable(value, myArray)
     buildTable(data);
 })
@@ -116,6 +89,7 @@ function readURL(input) {
         else {
             alert("Please Choose an image with size less dhan 5MB");
         }
+        uploadAd(fileUpload.files[0]);
     }
 }
 
@@ -125,30 +99,82 @@ $(function () {
     });
 });
 
-function showBanners(data){
+function showBanners(){
+    var myHeaders = new Headers();
+var banners;
+myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZWAiOiJTdW5ueSJ9LCJpYXQiOjE2MzQ5OTAwMjQsImV4cCI6MTY2NjUyNjAyNH0.mihGwhKvf-hF25BlN6DKASkDFrbIa-Fl8hGFabaW14g");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+    
     var table = document.getElementById("adTable");
     table.innerHTML='';
-    for(var i=-0; i<data.length; i++){
+
+
+    fetch(app_endpoint+"/v1/api/admin/ad/banner-details", requestOptions)
+  .then(response => response.json())
+  .then(json => {
+        console.log(json);
+        banners = json.bannerDetails;
+        for(let i = 0;i<banners.length;i++){
+        let banid = banners[i].bannerId;
         var row = `<tr>
-        <td>${data[i].ad_id}</td>
-        <td><img src=${data[i].ad_url}></td>
-        <td><button class="btn btn-sm btn-danger" onClick=remove(${data[i].ad_id})>Remove</button></td>
+        <td>${banners[i].bannerId}</td>
+        <td><img src=${banners[i].downloadUrl} width="300px" height="300px"></td>
+        <td><button class="btn btn-sm btn-danger banner-delete" id = "${banid}" onClick="remove('${banners[i].bannerId}')">Remove</button></td>
         </tr>`
         table.innerHTML +=row;
-    }
+        }
+        
+    
+    })
+  .catch(error => console.log('error', error));
 }
+
 
 
 //Display Ad Banners
 function AdBanner(){
-    showBanners(banners);
+    showBanners();
     document.getElementById("bannerTable").style.display="";
     }
 
     // Upload Ad Button
-function uploadAd(){
-   alert("Ad Upload Clicked");
+function uploadAd(file) {
+
+  console.log(file);
+  const form = new FormData();
+  form.append(
+    "image-upload-multiple",
+    file
+  );
+  
+
+  fetch(
+    app_endpoint+"/v1/api/admin/ad/banners",
+    {
+      method: "POST",
+      body: form,
+      headers: {
+        // "Content-Type":
+        //   "multipart/form-data; boundary=----WebKitFormBoundaryIn312MOjBWdkffIM",
+        authorization:
+          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZWAiOiJTdW5ueSJ9LCJpYXQiOjE2MzQ5OTAwMjQsImV4cCI6MTY2NjUyNjAyNH0.mihGwhKvf-hF25BlN6DKASkDFrbIa-Fl8hGFabaW14g",
+      },
+      
     }
+  )
+    .then((response) => {
+      console.log(response);
+      
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
 
 // Cancel upload Button
 function cancel(){
@@ -157,7 +183,65 @@ function cancel(){
 }
 
 // Remove Ad Button
-function remove(id){
-    alert("Remove Ad Clicked, ID : " + id);
+function remove(i){
+
+    var myHeaders = new Headers();
+    myHeaders.append(
+      "Authorization",
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZWAiOiJTdW5ueSJ9LCJpYXQiOjE2MzQ5OTAwMjQsImV4cCI6MTY2NjUyNjAyNH0.mihGwhKvf-hF25BlN6DKASkDFrbIa-Fl8hGFabaW14g"
+    );
+
+    var requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      app_endpoint+"/v1/api/admin/ad/banner/"+i,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then(json => {
+        console.log(json);
+        // alert("Ad Removed");
+        showBanners();
+      })
+      .catch((error) => console.log("error", error));
 }
+
+
+// Admin Login
+
+function adminLogin(){
+  var username = document.getElementById("loginid").value;
+  var password = document.getElementById("loginpwd").value;
+  fetch("https://dev.api.selvansteelhouse.in/v1/api/admin/ad/admin-login", {
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": JSON.stringify({username:username,password:password})
+})
+.then(response=>response.text()).then(data=>{
+  console.log(data);
+  console.log(JSON.parse(data).token);
+  if(JSON.parse(data).isSuccess==="true"){
+    localStorage.setItem("token","Bearer "+JSON.parse(data)?.token);
+    window.location.href = "./home.html";
+  }
+  else{
+    alert("Invalid Credentials");
+  }
+  
+})
+.catch(err => {
+  console.error(err);
+});
+}
+
+
+
+
+
 
