@@ -16,44 +16,58 @@ window.onload = function(){
 // Registered Users Section
 // ------------------------------------------
 //Table Search
-$('#search').on('keyup', function(){
-    var value = $(this).val(); 
-    // console.log("value", value);
-    var data = searchTable(value, myArray)
-    buildTable(data);
-})
+// $('#search').on('keyup', function(){
+//     var value = $(this).val(); 
+//     // console.log("value", value);
+//     var data = searchTable(value, myArray)
+//     buildTable(data);
+// })
 
-buildTable(myArray);
+// function searchTable(value, data){
+//     var newData = [];
+//     for(var i=0; i<data.length; i++){
+//         value = value.toLowerCase();
+//         var name = data[i].name.toLowerCase();
+//         if(name.includes(value)){
+//             newData.push(data[i]);
+//         }
+//     }
+//     return newData;
+// }
 
-function searchTable(value, data){
-    var newData = [];
-    for(var i=0; i<data.length; i++){
-        value = value.toLowerCase();
-        var name = data[i].customer_name.toLowerCase();
-        if(name.includes(value)){
-            newData.push(data[i]);
-        }
-    }
-    return newData;
-}
+function buildTable() {
+  var table = document.getElementById("myTable");
+  table.innerHTML = "";
 
-
-function buildTable(data){
-    var table = document.getElementById("myTable");
-    table.innerHTML='';
-    for(var i=0; i<data.length; i++){
+  fetch("https://dev.api.selvansteelhouse.in/v1/api/admin/registered-users", {
+    method: "GET",
+    headers: {
+      authorization:
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZSI6IlN1bm55In0sImlhdCI6MTYzNjE4NDYxMSwiZXhwIjoxNjY3NzIwNjExfQ._Blgof2aXobLpOw8iS1bwJ4VLFsndHEBvKNHCT78GM0",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      data = json.registeredProducts;
+      for (var i = 0; i < data.length; i++) {
         var row = `<tr>
-        <td>${data[i].customer_id}</td>
-        <td>${data[i].customer_name}</td>
-        <td>${data[i].customer_phone}</td>
-        <td>${data[i].customer_mail}</td>
-        </tr>`
-        table.innerHTML +=row;
-    }
+          <td>${data[i].timestamp}</td>
+          <td>${data[i].name}</td>
+          <td>${data[i].phone}</td>
+          <td>${data[i].email}</td>
+          </tr>`;
+        table.innerHTML += row;
+      }
+    })
+    .catch((error) => console.log("error", error));
 }
 
 //Show Table
 function show_table() {
+
+
+    buildTable();
     document.getElementById("dvTable").style.display="";
     document.getElementById("close").style.display="";
 }
