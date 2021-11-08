@@ -43,7 +43,7 @@ function buildTable() {
     method: "GET",
     headers: {
       authorization:
-        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZSI6IlN1bm55In0sImlhdCI6MTYzNjE4NDYxMSwiZXhwIjoxNjY3NzIwNjExfQ._Blgof2aXobLpOw8iS1bwJ4VLFsndHEBvKNHCT78GM0",
+      localStorage.getItem("token"),
     },
   })
     .then((response) => response.json())
@@ -117,7 +117,7 @@ $(function () {
 function showBanners(){
   var myHeaders = new Headers();
   var banners;
-  myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZWAiOiJTdW5ueSJ9LCJpYXQiOjE2MzQ5OTAwMjQsImV4cCI6MTY2NjUyNjAyNH0.mihGwhKvf-hF25BlN6DKASkDFrbIa-Fl8hGFabaW14g");
+  myHeaders.append("Authorization", localStorage.getItem("token"));
 
   var requestOptions = {
   method: 'GET',
@@ -171,7 +171,7 @@ function uploadAd(file) {
         // "Content-Type":
         //   "multipart/form-data; boundary=----WebKitFormBoundaryIn312MOjBWdkffIM",
         authorization:
-          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZWAiOiJTdW5ueSJ9LCJpYXQiOjE2MzQ5OTAwMjQsImV4cCI6MTY2NjUyNjAyNH0.mihGwhKvf-hF25BlN6DKASkDFrbIa-Fl8hGFabaW14g",
+        localStorage.getItem("token"),
       },
       
     }
@@ -204,7 +204,7 @@ function remove(i){
     var myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZWAiOiJTdW5ueSJ9LCJpYXQiOjE2MzQ5OTAwMjQsImV4cCI6MTY2NjUyNjAyNH0.mihGwhKvf-hF25BlN6DKASkDFrbIa-Fl8hGFabaW14g"
+      localStorage.getItem("token")
     );
 
     var requestOptions = {
