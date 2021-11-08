@@ -1,7 +1,4 @@
-//JSON to HTML Table
-//replace API response JSON 
-
-
+//OnLoad Token Generation
 window.onload = function(){
   console.log("loaded",window.location.href);
   var arr = window.location.href.split("/");
@@ -16,6 +13,8 @@ window.onload = function(){
   }
 }
 
+// Registered Users Section
+// ------------------------------------------
 //Table Search
 $('#search').on('keyup', function(){
     var value = $(this).val(); 
@@ -68,6 +67,7 @@ function close_table(){
 
 
 // Ad Banner JS
+// ---------------------------------------------
 
 /* SHOW UPLOADED IMAGE*/
 function readURL(input) {
@@ -84,12 +84,13 @@ function readURL(input) {
                 document.getElementById("button").style.display="";
                 };
                 reader.readAsDataURL(input.files[0]);
+                uploadAd(fileUpload.files[0]);
             }
         }
         else {
             alert("Please Choose an image with size less dhan 5MB");
         }
-        uploadAd(fileUpload.files[0]);
+        //uploadAd(fileUpload.files[0]);
     }
 }
 
@@ -100,21 +101,20 @@ $(function () {
 });
 
 function showBanners(){
-    var myHeaders = new Headers();
-var banners;
-myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZWAiOiJTdW5ueSJ9LCJpYXQiOjE2MzQ5OTAwMjQsImV4cCI6MTY2NjUyNjAyNH0.mihGwhKvf-hF25BlN6DKASkDFrbIa-Fl8hGFabaW14g");
+  var myHeaders = new Headers();
+  var banners;
+  myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImN1c3RvbWVySWQiOiI5MTc2MjIzODM1IiwibmFtZWAiOiJTdW5ueSJ9LCJpYXQiOjE2MzQ5OTAwMjQsImV4cCI6MTY2NjUyNjAyNH0.mihGwhKvf-hF25BlN6DKASkDFrbIa-Fl8hGFabaW14g");
 
-var requestOptions = {
+  var requestOptions = {
   method: 'GET',
   headers: myHeaders,
   redirect: 'follow'
-};
+  };
     
-    var table = document.getElementById("adTable");
-    table.innerHTML='';
+  var table = document.getElementById("adTable");
+  table.innerHTML='';
 
-
-    fetch(app_endpoint+"/v1/api/admin/ad/banner-details", requestOptions)
+  fetch(app_endpoint+"/v1/api/admin/ad/banner-details", requestOptions)
   .then(response => response.json())
   .then(json => {
         console.log(json);
@@ -127,32 +127,27 @@ var requestOptions = {
         <td><button class="btn btn-sm btn-danger banner-delete" id = "${banid}" onClick="remove('${banners[i].bannerId}')">Remove</button></td>
         </tr>`
         table.innerHTML +=row;
-        }
-        
-    
+      }
     })
   .catch(error => console.log('error', error));
 }
 
 
-
 //Display Ad Banners
 function AdBanner(){
-    showBanners();
-    document.getElementById("bannerTable").style.display="";
-    }
+  showBanners();
+  document.getElementById("bannerTable").style.display="";
+  }
 
-    // Upload Ad Button
+// Upload Ad Button
 function uploadAd(file) {
-
-  console.log(file);
+  //console.log(file);
   const form = new FormData();
   form.append(
     "image-upload-multiple",
     file
   );
   
-
   fetch(
     app_endpoint+"/v1/api/admin/ad/banners",
     {
@@ -167,24 +162,31 @@ function uploadAd(file) {
       
     }
   )
-    .then((response) => {
-      console.log(response);
+  .then((response) => {
+      //console.log(response);
       
     })
     .catch((err) => {
       console.error(err);
-    });
+  });
 }
 
 // Cancel upload Button
 function cancel(){
-    document.getElementById("imageResult").removeAttribute("src");
-    document.getElementById("button").style.display="none";
+  document.getElementById("imageResult").removeAttribute("src");
+  document.getElementById("button").style.display="none";
+}
+
+// Done Upload
+function done(){
+  alert("SSH Admin: Ad Banner uploaded successfully!")
+  AdBanner();
+  document.getElementById("imageResult").removeAttribute("src");
+  document.getElementById("button").style.display="none";
 }
 
 // Remove Ad Button
 function remove(i){
-
     var myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
@@ -203,8 +205,8 @@ function remove(i){
     )
       .then((response) => response.json())
       .then(json => {
-        console.log(json);
-        // alert("Ad Removed");
+        //console.log(json);
+        alert("SSH Admin: Ad Banner has removed successfully.");
         showBanners();
       })
       .catch((error) => console.log("error", error));
@@ -212,7 +214,6 @@ function remove(i){
 
 
 // Admin Login
-
 function adminLogin(){
   var username = document.getElementById("loginid").value;
   var password = document.getElementById("loginpwd").value;
@@ -224,14 +225,14 @@ function adminLogin(){
   "body": JSON.stringify({username:username,password:password})
 })
 .then(response=>response.text()).then(data=>{
-  console.log(data);
-  console.log(JSON.parse(data).token);
+  //console.log(data);
+  //console.log(JSON.parse(data).token);
   if(JSON.parse(data).isSuccess==="true"){
     localStorage.setItem("token","Bearer "+JSON.parse(data)?.token);
     window.location.href = "./home.html";
   }
   else{
-    alert("Invalid Credentials");
+    alert("SSH Admin: Invalid Credentials. Please Verify.");
   }
   
 })

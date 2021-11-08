@@ -4,32 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Ad Banner</title>
+    <title>SSH Admin: Upload Ad Banner</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
         <!-- Top Nav Bar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">SSH Admin</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/home.html">Registered Users</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#add_banner">Ad Banner</a>
-                  </li>
-                </ul>
-              </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#"><strong>Selvan Steel House</strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="/home.html">Registered Users</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#add_banner">Ad Banner</a>
+                </li>
+              </ul>
+              <span class="navbar-text">
+                <a class="btn btn-outline-warning" href="/index.html">Logout</a>
+              </span>
             </div>
-          </nav>
+          </div>
+        </nav>
 
-          
       <!-- Banner Image Upload -->
       <div class="container py-5" id="add_banner">
 
@@ -44,7 +46,7 @@
                     <input id="upload" type="file" accept="image/*" onchange="readURL(this);" class="form-control border-0">
                     <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file to be uploaded</label>
                     <div class="input-group-append">
-                        <label for="upload" class="btn btn-outline-primary rounded-pill px-4"><small class="font-weight-bold text-dark">Choose file</small></label>
+                        <label for="upload" class="btn btn-outline-primary rounded-pill px-4"><small class="font-weight-bold text-dark">Upload Banner</small></label>
                     </div>
                     <label class="btn btn-outline-warning mx-2 rounded-pill px-3" onclick="AdBanner()"><small class=" font-weight-bold text-dark">View Banners</small></label>
                 </div>
@@ -54,7 +56,7 @@
               </div>
 
               <div class="container text-center" id="button" style="display: none;">
-                <button type="button" class="btn btn-primary mt-3" id="uploadAd" onclick="uploadAd()">Upload</button>
+                <button type="button" class="btn btn-primary mt-3" id="uploadAd" onclick="done()">Done</button>
                 <button type="button" class="btn btn-danger mt-3 " onclick="cancel()">Cancel</button>
               </div>            
             </div>
