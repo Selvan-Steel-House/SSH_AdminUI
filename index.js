@@ -89,7 +89,7 @@ function readURL(input) {
     if (typeof (fileUpload.files) != "undefined") {
         var size = parseFloat(fileUpload.files[0].size / 1024).toFixed(2);
         // alert(size + " KB.");
-        if(size<=5000){
+        if(size<=1000){
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
@@ -102,7 +102,7 @@ function readURL(input) {
             }
         }
         else {
-            alert("Please Choose an image with size less dhan 5MB");
+            alert("Please Choose an image with size less dhan 1MB (Prefered: 100KB-500KB");
         }
         //uploadAd(fileUpload.files[0]);
     }
@@ -138,7 +138,10 @@ function showBanners(){
         var row = `<tr>
         <td>${banners[i].bannerId}</td>
         <td><img src=${banners[i].downloadUrl} width="300px" height="300px"></td>
-        <td><button class="btn btn-sm btn-danger banner-delete" id = "${banid}" onClick="remove('${banners[i].bannerId}')">Remove</button></td>
+        <td>
+        <button class="btn btn-sm btn-danger banner-delete" onClick="remove('${banners[i].bannerId}')">Remove</button>
+        <button class="btn btn-sm btn-success banner-notify" id = "${banid}" onClick="notify('${banners[i].bannerId}')">Notify</button>
+        </td>
         </tr>`
         table.innerHTML +=row;
       }
@@ -198,6 +201,29 @@ function done(){
   document.getElementById("imageResult").removeAttribute("src");
   document.getElementById("button").style.display="none";
 }
+
+function notify(id){
+  // alert("SSH Admin: Ad Banner notified successfully!" + id);
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", localStorage.getItem("token"));
+
+  var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  redirect: 'follow'
+  };
+    
+  fetch(app_endpoint+"/v1/api/admin/ad/notify/"+id, requestOptions)
+  .then(response => response.json())
+  .then(json => {
+        console.log(json);
+        alert("SSH Admin: Ad Banner notified successfully!");
+        document.getElementById(id).style.display="none";
+        //AdBanner();
+    })
+  .catch(error => console.log('error', error));
+}
+
 
 // Remove Ad Button
 function remove(i){
