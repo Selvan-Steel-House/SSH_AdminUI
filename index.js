@@ -136,8 +136,7 @@ function showBanners(){
         for(let i = 0;i<banners.length;i++){
         let banid = banners[i].bannerId;
         var row = `<tr>
-        <td>${banners[i].bannerId}</td>
-        <td><img src=${banners[i].downloadUrl} width="300px" height="300px"></td>
+        <td><img src=${banners[i].downloadUrl} width="800px" height="300px"></td>
         <td>
         <button class="btn btn-sm btn-danger banner-delete" onClick="remove('${banners[i].bannerId}')">Remove</button>
         <button class="btn btn-sm btn-success banner-notify" id = "${banid}" onClick="notify('${banners[i].bannerId}')">Notify</button>

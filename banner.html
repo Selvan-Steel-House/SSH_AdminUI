@@ -43,8 +43,8 @@
         <div class="row py-4">
             <div class="col-lg-6 mx-auto">
                 <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                    <input id="upload" type="file" accept="image/*" onchange="readURL(this);" class="form-control border-0">
-                    <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file to be uploaded</label>
+                    <input id="upload" type="file" accept="image/png, image/jpeg, image/jpg" onchange="readURL(this);" class="form-control border-0">
+                    <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
                     <div class="input-group-append">
                         <label for="upload" class="btn btn-outline-primary rounded-pill px-4"><small class="font-weight-bold text-dark">Upload Banner</small></label>
                     </div>
@@ -66,7 +66,6 @@
       <div id="bannerTable" style="display: none;">
         <table class="table  text-center">
           <tr class="bg-light">
-            <th>Ad ID</th>
             <th>Ad Banner</th>
             <th>Action</th>
           </tr>
