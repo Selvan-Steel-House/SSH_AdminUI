@@ -98,13 +98,12 @@ function readURL(input) {
                 document.getElementById("button").style.display="";
                 };
                 reader.readAsDataURL(input.files[0]);
-                uploadAd(fileUpload.files[0]);
+                //uploadAd(fileUpload.files[0]);
             }
         }
         else {
             alert("Please Choose an image with size less dhan 1MB (Prefered: 100KB-500KB");
         }
-        //uploadAd(fileUpload.files[0]);
     }
 }
 
@@ -157,7 +156,6 @@ function AdBanner(){
 
 // Upload Ad Button
 function uploadAd(file) {
-  //console.log(file);
   const form = new FormData();
   form.append(
     "image-upload-multiple",
@@ -180,23 +178,25 @@ function uploadAd(file) {
   )
   .then((response) => {
       //console.log(response);
-      
     })
     .catch((err) => {
       console.error(err);
   });
 }
 
-// Cancel upload Button
+//Cancel Upload Button
 function cancel(){
   document.getElementById("imageResult").removeAttribute("src");
   document.getElementById("button").style.display="none";
+  location.reload();
 }
 
 // Done Upload
 function done(){
-  alert("SSH Admin: Ad Banner uploaded successfully!")
-  AdBanner();
+  var fileUpload = document.getElementById("upload");
+  uploadAd(fileUpload.files[0]);
+  alert("SSH Admin: Ad Banner uploaded successfully!");
+  location.reload();
   document.getElementById("imageResult").removeAttribute("src");
   document.getElementById("button").style.display="none";
 }
