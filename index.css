@@ -101,3 +101,10 @@
     .navbar{
         background-color: #FFA900 !important;
     }
+
+    /* Watermark */
+    .watermark {
+        position: fixed;
+        bottom: 0;
+        left: 80%;
+    }

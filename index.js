@@ -3,7 +3,7 @@ window.onload = function(){
   console.log("loaded",window.location.href);
   var arr = window.location.href.split("/");
 
-  if(!localStorage.getItem("token")&&arr[arr.length-1]!="index.html"){
+  if(!localStorage.getItem("dev-token")&&arr[arr.length-1]!="index.html"){
     window.location.href = "./index.html";
   }
   else{
@@ -43,7 +43,7 @@ function buildTable() {
     method: "GET",
     headers: {
       authorization:
-      localStorage.getItem("token"),
+      localStorage.getItem("dev-token"),
     },
   })
     .then((response) => response.json())
@@ -116,7 +116,7 @@ $(function () {
 function showBanners(){
   var myHeaders = new Headers();
   var banners;
-  myHeaders.append("Authorization", localStorage.getItem("token"));
+  myHeaders.append("Authorization", localStorage.getItem("dev-token"));
 
   var requestOptions = {
   method: 'GET',
@@ -171,7 +171,7 @@ function uploadAd(file) {
         // "Content-Type":
         //   "multipart/form-data; boundary=----WebKitFormBoundaryIn312MOjBWdkffIM",
         authorization:
-        localStorage.getItem("token"),
+        localStorage.getItem("dev-token"),
       },
       
     }
@@ -204,7 +204,7 @@ function done(){
 function notify(id){
   // alert("SSH Admin: Ad Banner notified successfully!" + id);
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", localStorage.getItem("token"));
+  myHeaders.append("Authorization", localStorage.getItem("dev-token"));
 
   var requestOptions = {
   method: 'POST',
@@ -229,7 +229,7 @@ function remove(i){
     var myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
-      localStorage.getItem("token")
+      localStorage.getItem("dev-token")
     );
 
     var requestOptions = {
@@ -267,7 +267,7 @@ function adminLogin(){
   //console.log(data);
   //console.log(JSON.parse(data).token);
   if(JSON.parse(data).isSuccess==="true"){
-    localStorage.setItem("token","Bearer "+JSON.parse(data)?.token);
+    localStorage.setItem("dev-token","Bearer "+JSON.parse(data)?.token);
     window.location.href = "./home.html";
   }
   else{
